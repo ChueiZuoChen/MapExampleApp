@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import androidx.compose.animation.core.Easing
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -33,6 +34,10 @@ import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
 import com.mapbox.maps.extension.compose.annotation.rememberIconImage
+import com.mapbox.maps.extension.compose.style.standard.LightPresetValue
+import com.mapbox.maps.extension.compose.style.standard.MapboxStandardStyle
+import com.mapbox.maps.extension.compose.style.standard.ThemeValue
+import com.mapbox.maps.extension.compose.style.standard.rememberStandardStyleState
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
 
 @Composable
@@ -42,6 +47,7 @@ fun MapboxView(
 ) {
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
+    val isSystemInDarkTheme = isSystemInDarkTheme()
     LaunchedEffect(key1 = true) {
         val serviceIntent = Intent(context, LocationTrackingService::class.java)
         context.bindService(
@@ -104,7 +110,7 @@ fun MapboxView(
                 trackingState.location?.let { location ->
                     Log.d("LocationService", "LocationScreen: $location")
                     MapboxMap(
-                        Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize(),
                         mapViewportState = rememberMapViewportState {
                             flyTo(
                                 cameraOptions = CameraOptions.Builder()
@@ -116,6 +122,17 @@ fun MapboxView(
                                 animationOptions = MapAnimationOptions.mapAnimationOptions {
                                     duration(300)
                                     Easing { t -> t * t * (3f - 2f * t) }
+                                }
+                            )
+                        },
+                        style = {
+                            MapboxStandardStyle(
+                                standardStyleState = rememberStandardStyleState {
+                                    configurationsState.apply {
+                                        lightPreset =
+                                            if (isSystemInDarkTheme) LightPresetValue.NIGHT else LightPresetValue.DAY
+                                        theme = ThemeValue.FADED
+                                    }
                                 }
                             )
                         }

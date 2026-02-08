@@ -64,12 +64,12 @@ fun LocationHistoryItem(item: LocationEntity) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "latitude: %f".format(item.latitude),
+                text = "latitude: ${item.latitude}",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
             Text(
-                text = "longitude: %f".format(item.longitude),
+                text = "longitude: ${item.longitude}",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
