@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
 }
 
 android {
@@ -53,12 +54,12 @@ dependencies {
     implementation(libs.play.services.location)
 
     // mapbox
-    implementation("com.mapbox.maps:android-ndk27:11.18.1")
-    implementation("com.mapbox.extension:maps-compose-ndk27:11.18.1")
+    implementation(libs.maps.android.ndk27)
+    implementation(libs.maps.compose.ndk27)
 
-    implementation ("androidx.room:room-runtime:2.6.0")
-    annotationProcessor ("androidx.room:room-compiler:2.6.0")
-    implementation ("androidx.room:room-ktx:2.6.0")
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import androidx.compose.animation.core.Easing
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,11 +28,12 @@ import com.example.mapexampleapp.service.LocationTrackingService
 import com.example.mapexampleapp.state.LocationState
 import com.example.mapexampleapp.viewmodel.LocationViewModel
 import com.mapbox.geojson.Point
+import com.mapbox.maps.CameraOptions
 import com.mapbox.maps.extension.compose.MapboxMap
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.extension.compose.annotation.generated.PointAnnotation
 import com.mapbox.maps.extension.compose.annotation.rememberIconImage
-import kotlin.math.floor
+import com.mapbox.maps.plugin.animation.MapAnimationOptions
 
 @Composable
 fun MapboxView(
@@ -40,7 +42,6 @@ fun MapboxView(
 ) {
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
-
     LaunchedEffect(key1 = true) {
         val serviceIntent = Intent(context, LocationTrackingService::class.java)
         context.bindService(
@@ -105,12 +106,18 @@ fun MapboxView(
                     MapboxMap(
                         Modifier.fillMaxSize(),
                         mapViewportState = rememberMapViewportState {
-                            setCameraOptions {
-                                zoom(19.0)
-                                center(Point.fromLngLat(location.longitude, location.latitude))
-                                pitch(45.0)
-                                bearing(0.0)
-                            }
+                            flyTo(
+                                cameraOptions = CameraOptions.Builder()
+                                    .zoom(18.5)
+                                    .pitch(45.0)
+                                    .bearing(0.0)
+                                    .center(Point.fromLngLat(location.longitude, location.latitude))
+                                    .build(),
+                                animationOptions = MapAnimationOptions.mapAnimationOptions {
+                                    duration(300)
+                                    Easing { t -> t * t * (3f - 2f * t) }
+                                }
+                            )
                         }
                     ) {
                         val marker = rememberIconImage(R.drawable.taxi_2401174)

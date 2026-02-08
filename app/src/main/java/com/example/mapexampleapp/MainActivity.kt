@@ -33,6 +33,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /** Debug deleteAllLocations */
+//        viewModel.deleteAllLocations()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
@@ -60,11 +62,9 @@ class MainActivity : ComponentActivity() {
         val permissions = mutableListOf(
             Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
         )
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             permissions.add(Manifest.permission.POST_NOTIFICATIONS)
         }
-
         locationPermissionLauncher.launch(permissions.toTypedArray())
     }
 

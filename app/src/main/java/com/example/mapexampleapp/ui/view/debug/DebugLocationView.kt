@@ -38,7 +38,7 @@ fun DebugLocationView(
 ) {
     val state by viewModel.state.collectAsState()
     val context = LocalContext.current
-
+    val locations by viewModel.locations.collectAsState(emptyList())
     LaunchedEffect(key1 = true) {
         val serviceIntent = Intent(context, LocationTrackingService::class.java)
         context.bindService(
@@ -158,5 +158,7 @@ fun DebugLocationView(
                 Text("Stop Tracking")
             }
         }
+        Spacer(modifier = Modifier.height(32.dp))
+        LocationHistoryList(locations)
     }
 }

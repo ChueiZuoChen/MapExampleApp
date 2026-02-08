@@ -74,6 +74,7 @@ class LocationTrackingService : Service() {
                 startForegroundService()
                 startLocationUpdates()
             }
+
             ACTION_STOP -> {
                 stopLocationUpdates()
                 stopSelf()

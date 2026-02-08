@@ -2,7 +2,6 @@ package com.example.mapexampleapp.state
 
 import android.location.Location
 
-
 sealed class LocationState {
     data object Idle : LocationState()
     data object RequestingPermission : LocationState()
