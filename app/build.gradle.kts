@@ -52,6 +52,13 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.play.services.location)
 
+    // mapbox
+    implementation("com.mapbox.maps:android-ndk27:11.18.1")
+    implementation("com.mapbox.extension:maps-compose-ndk27:11.18.1")
+
+    implementation ("androidx.room:room-runtime:2.6.0")
+    annotationProcessor ("androidx.room:room-compiler:2.6.0")
+    implementation ("androidx.room:room-ktx:2.6.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

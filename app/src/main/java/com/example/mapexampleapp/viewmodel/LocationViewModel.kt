@@ -20,7 +20,6 @@ class LocationViewModel(
 ) : ViewModel() {
     private val _state = MutableStateFlow<LocationState>(LocationState.Idle)
     val state: StateFlow<LocationState> = _state.asStateFlow()
-
     private val _events = MutableStateFlow<LocationEvent?>(null)
     val events = _events.asStateFlow()
 
@@ -66,10 +65,12 @@ class LocationViewModel(
                                 )
                             }
 
-                            else -> LocationState.Tracking(
-                                location = intent.location,
-                                isTracking = true
-                            )
+                            else -> {
+                                LocationState.Tracking(
+                                    location = intent.location,
+                                    isTracking = true
+                                )
+                            }
                         }
                     }
                 }

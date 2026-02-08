@@ -21,6 +21,7 @@ import com.example.mapexampleapp.intent.LocationIntent
 import com.example.mapexampleapp.viewmodel.LocationViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
@@ -73,7 +74,6 @@ class LocationTrackingService : Service() {
                 startForegroundService()
                 startLocationUpdates()
             }
-
             ACTION_STOP -> {
                 stopLocationUpdates()
                 stopSelf()
@@ -112,8 +112,8 @@ class LocationTrackingService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Location Tracking")
             .setContentText("Tracking your location in background")
-            .setSmallIcon(R.drawable.ic_launcher_background)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setSmallIcon(R.drawable.taxi_2401174)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
     }
 
@@ -126,22 +126,17 @@ class LocationTrackingService : Service() {
             }
             return
         }
-
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
         val isGpsEnabled = locationManager?.isProviderEnabled(LocationManager.GPS_PROVIDER) ?: false
         val isNetworkEnabled =
             locationManager?.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ?: false
         if (!isGpsEnabled && !isNetworkEnabled) {
             return
         }
-
-        val request = com.google.android.gms.location.LocationRequest.Builder(
+        val request = LocationRequest.Builder(
             Priority.PRIORITY_HIGH_ACCURACY,
             500L
         ).build()
-
-
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
                 super.onLocationResult(result)
@@ -151,9 +146,7 @@ class LocationTrackingService : Service() {
                 }
             }
         }
-
         fusedLocationProvider = LocationServices.getFusedLocationProviderClient(applicationContext)
-
         try {
             coroutineScope.launch {
                 viewModelRef?.get()?.processIntent(
@@ -167,7 +160,6 @@ class LocationTrackingService : Service() {
                     )
                 }
             }
-
         } catch (e: SecurityException) {
             Log.e("LocationService", "SecurityException: ${e.message}")
             coroutineScope.launch {
