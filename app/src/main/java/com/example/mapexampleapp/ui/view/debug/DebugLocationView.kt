@@ -163,5 +163,9 @@ fun DebugLocationView(
         }
         Spacer(modifier = Modifier.height(32.dp))
         LocationHistoryList(locations)
+        Spacer(modifier = Modifier.height(32.dp))
+        Button(onClick = { viewModel.deleteAllLocations() }) {
+            Text("Remove All")
+        }
     }
 }

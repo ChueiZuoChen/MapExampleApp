@@ -13,7 +13,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.mapexampleapp.event.LocationEvent
 import com.example.mapexampleapp.intent.LocationIntent
 import com.example.mapexampleapp.ui.theme.MapExampleAppTheme
-import com.example.mapexampleapp.ui.view.debug.DebugLocationView
 import com.example.mapexampleapp.ui.view.mapbox.MapboxView
 import com.example.mapexampleapp.viewmodel.LocationViewModel
 import com.example.mapexampleapp.viewmodel.LocationViewModelFactory
@@ -34,8 +33,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        /** Debug deleteAllLocations */
-//        viewModel.deleteAllLocations()
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.events.collect { event ->
