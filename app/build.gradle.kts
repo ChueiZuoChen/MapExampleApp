@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.maps.android.ndk27)
     implementation(libs.maps.compose.ndk27)
 
+    // room
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)

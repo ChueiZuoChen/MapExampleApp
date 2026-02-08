@@ -92,7 +92,7 @@ class LocationTrackingService : Service() {
     }
 
     private fun startForegroundService() {
-        val notification = createNotification()
+        val notification = createNotification("Tracking your location in background")
         startForeground(NOTIFICATION_ID, notification)
     }
 
@@ -109,10 +109,10 @@ class LocationTrackingService : Service() {
         }
     }
 
-    private fun createNotification(): Notification {
+    private fun createNotification(message: String?): Notification {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Location Tracking")
-            .setContentText("Tracking your location in background")
+            .setContentText(message)
             .setSmallIcon(R.drawable.taxi_2401174)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .build()
@@ -144,6 +144,10 @@ class LocationTrackingService : Service() {
                 result.locations.lastOrNull()?.let { latestLocation ->
                     viewModelRef?.get()
                         ?.processIntent(LocationIntent.LocationUpdate(latestLocation))
+                    val lat = latestLocation.latitude.toString()
+                    val long = latestLocation.longitude.toString()
+                    val updatedNotification = createNotification("Location: ($lat, $long)")
+                    notificationManager.notify(NOTIFICATION_ID, updatedNotification)
                 }
             }
         }

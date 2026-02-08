@@ -45,16 +45,16 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             MapExampleAppTheme {
-//                MapboxView(viewModel = viewModel) { start ->
-//                    if (start) {
-//                        startTracking()
-//                    }
-//                }
+                MapboxView(viewModel = viewModel) { start ->
+                    if (start) {
+                        startTracking()
+                    }
+                }
                 /** Debug */
-                DebugLocationView(viewModel = viewModel,
-                    onStartTracking = { startTracking() },
-                    onStopTracking = { stopTracking() }
-                )
+//                DebugLocationView(viewModel = viewModel,
+//                    onStartTracking = { startTracking() },
+//                    onStopTracking = { stopTracking() }
+//                )
             }
         }
     }

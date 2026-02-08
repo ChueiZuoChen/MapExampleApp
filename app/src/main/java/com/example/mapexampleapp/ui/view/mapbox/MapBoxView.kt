@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import androidx.compose.animation.core.Easing
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -68,7 +69,8 @@ fun MapboxView(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .background(MaterialTheme.colorScheme.onBackground)
+            .padding(top = 50.dp, start = 8.dp, end = 8.dp, bottom = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
