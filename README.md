@@ -1,5 +1,6 @@
 - MVI architecture with Coroutines for reactive data flow management
 - Real-time location acquisition (lat/long/timestamp) via Android Location Manager
+- FusedLocation (GPS + Wifi + Low energy mode) 
 - MapBox API integration for geospatial visualization
 - Automatic data persistence to Room database via streaming flows
 - Debug mode for observing live Room database content
